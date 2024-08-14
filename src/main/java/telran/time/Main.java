@@ -22,12 +22,12 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     private static MonthYear getMonthYear(String[] args) throws Exception {
         // Setting the defaults
-        // Может это можно сделать перегрузкой метода, но я не знаю как
+        // Valid args, if any, will replace them later
+        // Может default можно сделать перегрузкой метода, но я не знаю как (???)
         int month = LocalDate.now().getMonthValue();
         int year = LocalDate.now().getYear();
         int weekStartsOnDay = DayOfWeek.MONDAY.getValue();
@@ -72,15 +72,14 @@ public class Main {
         printTitle(monthYear);
         printWeekDays(monthYear);
         printDates(monthYear);
-
     }
 
     private static void printTitle(MonthYear monthYear) {
-        String getMonthName = Month
+        String monthName = Month
                 .of(monthYear.month())
                 .getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault());
-        String getYearName = Integer.toString(monthYear.year());
-        System.out.print("\n\t\t" + getYearName + "\t" + getMonthName + "\n");
+        String yearName = Integer.toString(monthYear.year());
+        System.out.print("\n\t\t" + yearName + "\t" + monthName + "\n");
     }
 
     private static void printWeekDays(MonthYear monthYear) {
@@ -111,7 +110,7 @@ public class Main {
             }
         }
         System.out.print(res + "\n\n");
-        // printf("%4d", number) - не знаю как использовать эту подсказку, увы
+        // printf("%4d", number) - не знаю как использовать эту подсказку, увы (???)
     }
 
     private static int getFirstDayOfWeek(MonthYear monthYear) {
@@ -119,12 +118,13 @@ public class Main {
         return tmp.getDayOfWeek().getValue();
     }
 
-    private static int getOffset(int firstWeekDay, int weekStartDay) {
-        return (firstWeekDay - weekStartDay + 7) % 7;
-    }
-
     private static int getLastDayOfMonth(MonthYear monthYear) {
         LocalDate tmp = LocalDate.of(monthYear.year(), monthYear.month(), 1);
         return tmp.lengthOfMonth();
     }
+
+    private static int getOffset(int firstWeekDay, int weekStartDay) {
+        return (firstWeekDay - weekStartDay + 7) % 7;
+    }
+
 }
